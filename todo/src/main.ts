@@ -2,9 +2,9 @@ import { Task } from "./task";
 import { TaskList, ITaskList } from "./taskList";
 import "./assets/style.css";
 
-let titleInput: HTMLInputElement;
-let descInput: HTMLInputElement;
-let addTaskButton: HTMLButtonElement;
+// let titleInput: HTMLInputElement;
+// // let descInput: HTMLInputElement;
+// let addTaskButton: HTMLButtonElement;
 
 const searchInput = document.getElementById("search-input") as HTMLInputElement;
 const allBtn = document.getElementById("all-btn") as HTMLButtonElement;
@@ -14,6 +14,13 @@ const completedBtn = document.getElementById(
 const remainingBtn = document.getElementById(
   "remaining-btn"
 ) as HTMLButtonElement;
+
+const titleInput = document.getElementById(
+  "todo-input-title"
+) as HTMLInputElement;
+const descInput = document.getElementById(
+  "todo-input-desc"
+) as HTMLInputElement;
 
 const taskList = new TaskList();
 const todoListElement = document.getElementById("task-listElement");
@@ -27,7 +34,6 @@ function createTask(title: string, description: string): Task {
 
 function toggleTaskCompleted(id: string): Task {
   const task = taskList.getTaskById(id);
-
   if (!task) {
     throw new Error(`Task with id ${id} not found`);
   }
@@ -88,19 +94,31 @@ function renderList(tasks: ITaskList) {
       renderList(filterTasks(taskList, searchInput.value));
     });
 
+    const deleteIcon = document.createElement("span");
+    deleteIcon.classList.add("delete-icon");
+    deleteIcon.textContent = "❌";
+
+    deleteIcon.addEventListener("click", () => {
+      deleteTask(task.id);
+      renderList(filterTasks(taskList, searchInput.value));
+    });
+
     label.appendChild(title);
     label.appendChild(description);
     label.appendChild(inputField);
+    label.appendChild(deleteIcon);
 
     todoListElement.appendChild(element);
   });
 }
 
-allBtn?.addEventListener("click", () =>
-  renderList(filterTasks(taskList, searchInput.value))
-);
+allBtn?.addEventListener("click", () => {
+  renderList(filterTasks(taskList, searchInput.value));
+  showInputAndButton();
+});
 completedBtn?.addEventListener("click", () => {
   renderList(filterTasks(taskList, searchInput.value, true));
+  hideInputAndButton();
 });
 
 remainingBtn?.addEventListener("click", () => {
@@ -109,16 +127,9 @@ remainingBtn?.addEventListener("click", () => {
   hideInputAndButton();
 });
 
-const todoBtnAdd = document.getElementById("add-task");
+const todoBtnAdd = document.getElementById("add-task") as HTMLInputElement;
 
 todoBtnAdd?.addEventListener("click", () => {
-  const titleInput = document.getElementById(
-    "todo-input-title"
-  ) as HTMLInputElement;
-  const descInput = document.getElementById(
-    "todo-input-desc"
-  ) as HTMLInputElement;
-
   const title: string = titleInput.value || "Todo";
   const desc: string = descInput.value || "No description";
 
@@ -141,10 +152,24 @@ function render(searchParam: string = "") {
 }
 
 function hideInputAndButton() {
-  if (titleInput && descInput && addTaskButton) {
+  if (titleInput && descInput && todoBtnAdd) {
     titleInput.style.display = "none";
     descInput.style.display = "none";
-    addTaskButton.style.display = "none";
+    todoBtnAdd.style.display = "none";
+  }
+}
+function showInputAndButton() {
+  if (titleInput && descInput && todoBtnAdd) {
+    titleInput.style.display = "block";
+    descInput.style.display = "block";
+    todoBtnAdd.style.display = "block";
+  }
+}
+
+function deleteTask(id: string) {
+  const taskIndex = taskList.list.findIndex((task) => task.id === id);
+  if (taskIndex !== -1) {
+    taskList.list.splice(taskIndex, 1);
   }
 }
 
