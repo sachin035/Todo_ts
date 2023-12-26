@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <header class="header container">
+      <h2 class="header__title">To Do</h2>
+      <section class="header__nav">
+        <button class="btn" id="all-btn">All</button>
+        <button class="btn" id="completed-btn">Completed</button>
+        <button class="btn" id="remaining-btn">Remaining</button>
+      </section>
+    </header>
+    <div id="app"></div>
+
+    <main>
+      <section class="TD container">
+        <div id="search-container" class="todo-search">
+          <input
+            type="text"
+            id="search-input"
+            class="input"
+            placeholder="search..."
+          />
+        </div>
+        <div class="todo-list" id="todo-list">
+          <div class="todo-input">
+            <input
+              type="text"
+              id="todo-input-title"
+              placeholder="Enter Title..."
+            />
+            <input
+              type="text"
+              id="todo-input-desc"
+              placeholder="Enter description..."
+            />
+          </div>
+          <div id="controls" class="controls">
+            <button id="add-task" class="btn btn-add">Add Task</button>
+          </div>
+          <!-- <div class="todo__create--btn">
+          <button class="delete" id="btn-cancel-todo">Cancel</button>
+          <button class="secondary" id="btn-add-todo">Add Todo</button>
+        </div> -->
+        </div>
+        <div class="todo-listElement" id="todo-listElement"></div>
+
+        <div id="task-listElement">
+          <!-- <div class="task-item">
+          <label class="form-control">
+            <input type="checkbox" name="checkbox-checked" checked />
+            <div class="task-item-value">Try something new</div>
+          </label>
+        </div> -->
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
