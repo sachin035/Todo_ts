@@ -4,7 +4,7 @@ import "./assets/style.css";
 
 let titleInput: HTMLInputElement;
 let descInput: HTMLInputElement;
-let todoBtnAdd: HTMLButtonElement;
+let addTaskButton: HTMLButtonElement;
 
 const searchInput = document.getElementById("search-input") as HTMLInputElement;
 const allBtn = document.getElementById("all-btn") as HTMLButtonElement;
@@ -101,7 +101,6 @@ allBtn?.addEventListener("click", () =>
 );
 completedBtn?.addEventListener("click", () => {
   renderList(filterTasks(taskList, searchInput.value, true));
-  hideInputAndButton();
 });
 
 remainingBtn?.addEventListener("click", () => {
@@ -142,11 +141,11 @@ function render(searchParam: string = "") {
 }
 
 function hideInputAndButton() {
-  // if (titleInput && descInput && addTaskButton) {
-  titleInput.style.display = "none";
-  descInput.style.display = "none";
-  todoBtnAdd.style.display = "none";
-  //}
+  if (titleInput && descInput && addTaskButton) {
+    titleInput.style.display = "none";
+    descInput.style.display = "none";
+    addTaskButton.style.display = "none";
+  }
 }
 
 render();
